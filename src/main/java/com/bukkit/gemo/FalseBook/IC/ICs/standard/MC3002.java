@@ -8,29 +8,27 @@ import com.bukkit.gemo.FalseBook.IC.ICs.Lever;
 import org.bukkit.block.Sign;
 import org.bukkit.event.block.SignChangeEvent;
 
-public class MC3002 extends BaseIC
-{
-  public MC3002()
-  {
-    this.ICName = "3-INPUT AND";
-    this.ICNumber = "[MC3002]";
-    setICGroup(ICGroup.STANDARD);
-    this.chipState = new BaseChip(true, true, true, "Input A", "Input B", "Input C");
-    this.chipState.setOutputs("Output", "", "");
-    this.ICDescription = "The MC3002 outputs a high if and only if all three inputs are high.";
-  }
+public class MC3002 extends BaseIC {
 
-  public void checkCreation(SignChangeEvent event)
-  {
-    event.setLine(2, "");
-    event.setLine(3, "");
-  }
+    public MC3002() {
+        this.ICName = "3-INPUT AND";
+        this.ICNumber = "[MC3002]";
+        setICGroup(ICGroup.STANDARD);
+        this.chipState = new BaseChip(true, true, true, "Input A", "Input B", "Input C");
+        this.chipState.setOutputs("Output", "", "");
+        this.ICDescription = "The MC3002 outputs a high if and only if all three inputs are high.";
+    }
 
-  public void Execute(Sign signBlock, InputState currentInputs, InputState previousInputs)
-  {
-    if ((currentInputs.isInputOneHigh()) && (currentInputs.isInputTwoHigh()) && (currentInputs.isInputThreeHigh()))
-      switchLever(Lever.BACK, signBlock, true);
-    else
-      switchLever(Lever.BACK, signBlock, false);
-  }
+    public void checkCreation(SignChangeEvent event) {
+        event.setLine(2, "");
+        event.setLine(3, "");
+    }
+
+    public void Execute(Sign signBlock, InputState currentInputs, InputState previousInputs) {
+        if ((currentInputs.isInputOneHigh()) && (currentInputs.isInputTwoHigh()) && (currentInputs.isInputThreeHigh())) {
+            switchLever(Lever.BACK, signBlock, true);
+        } else {
+            switchLever(Lever.BACK, signBlock, false);
+        }
+    }
 }

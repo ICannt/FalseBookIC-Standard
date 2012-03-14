@@ -8,26 +8,23 @@ import com.bukkit.gemo.FalseBook.IC.ICs.Lever;
 import org.bukkit.block.Sign;
 import org.bukkit.event.block.SignChangeEvent;
 
-public class MC1001 extends BaseIC
-{
-  public MC1001()
-  {
-    this.ICName = "NOT";
-    this.ICNumber = "[MC1001]";
-    setICGroup(ICGroup.STANDARD);
-    this.chipState = new BaseChip(true, false, false, "State", "", "");
-    this.chipState.setOutputs("inverted State", "", "");
-    this.ICDescription = "The MC1001 inverts the inputstate.";
-  }
+public class MC1001 extends BaseIC {
 
-  public void checkCreation(SignChangeEvent event)
-  {
-    event.setLine(2, "");
-    event.setLine(3, "");
-  }
+    public MC1001() {
+        this.ICName = "NOT";
+        this.ICNumber = "[MC1001]";
+        setICGroup(ICGroup.STANDARD);
+        this.chipState = new BaseChip(true, false, false, "State", "", "");
+        this.chipState.setOutputs("inverted State", "", "");
+        this.ICDescription = "The MC1001 inverts the inputstate.";
+    }
 
-  public void Execute(Sign signBlock, InputState currentInputs, InputState previousInputs)
-  {
-    switchLever(Lever.BACK, signBlock, !currentInputs.isInputOneHigh());
-  }
+    public void checkCreation(SignChangeEvent event) {
+        event.setLine(2, "");
+        event.setLine(3, "");
+    }
+
+    public void Execute(Sign signBlock, InputState currentInputs, InputState previousInputs) {
+        switchLever(Lever.BACK, signBlock, !currentInputs.isInputOneHigh());
+    }
 }

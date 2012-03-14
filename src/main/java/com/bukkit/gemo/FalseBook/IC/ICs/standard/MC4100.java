@@ -8,35 +8,32 @@ import com.bukkit.gemo.FalseBook.IC.ICs.Lever;
 import org.bukkit.block.Sign;
 import org.bukkit.event.block.SignChangeEvent;
 
-public class MC4100 extends BaseIC
-{
-  public MC4100()
-  {
-    this.ICName = "FULL SUBTRACTOR";
-    this.ICNumber = "[MC4100]";
-    setICGroup(ICGroup.STANDARD);
-    this.chipState = new BaseChip(true, true, true, "Bit to be subtracted from (minuend)", "First bit to subract (subtrahend)", "Second bit to subtract (subtrahend)");
-    this.chipState.setOutputs("Difference", "Borrow", "Borrow (always the same as Output2)");
-    this.ICDescription = "The MC4100 implements a <a href=\"http://en.wikipedia.org/wiki/Subtractor#Full_subtractor\">full subtractor.</a>";
-  }
+public class MC4100 extends BaseIC {
 
-  public void checkCreation(SignChangeEvent event)
-  {
-    event.setLine(2, "");
-    event.setLine(3, "");
-  }
+    public MC4100() {
+        this.ICName = "FULL SUBTRACTOR";
+        this.ICNumber = "[MC4100]";
+        setICGroup(ICGroup.STANDARD);
+        this.chipState = new BaseChip(true, true, true, "Bit to be subtracted from (minuend)", "First bit to subract (subtrahend)", "Second bit to subtract (subtrahend)");
+        this.chipState.setOutputs("Difference", "Borrow", "Borrow (always the same as Output2)");
+        this.ICDescription = "The MC4100 implements a <a href=\"http://en.wikipedia.org/wiki/Subtractor#Full_subtractor\">full subtractor.</a>";
+    }
 
-  public void Execute(Sign signBlock, InputState currentInputs, InputState previousInputs)
-  {
-    boolean inputA = currentInputs.isInputOneHigh();
-    boolean inputB = currentInputs.isInputTwoHigh();
-    boolean inputC = currentInputs.isInputThreeHigh();
+    public void checkCreation(SignChangeEvent event) {
+        event.setLine(2, "");
+        event.setLine(3, "");
+    }
 
-    boolean result = inputA ^ inputB ^ inputC;
-    boolean carry = inputC & !(inputA ^ inputB) | !inputA & inputB;
+    public void Execute(Sign signBlock, InputState currentInputs, InputState previousInputs) {
+        boolean inputA = currentInputs.isInputOneHigh();
+        boolean inputB = currentInputs.isInputTwoHigh();
+        boolean inputC = currentInputs.isInputThreeHigh();
 
-    switchLever(Lever.BACK, signBlock, result, 3);
-    switchLever(Lever.LEFT, signBlock, carry, 2);
-    switchLever(Lever.RIGHT, signBlock, carry, 2);
-  }
+        boolean result = inputA ^ inputB ^ inputC;
+        boolean carry = inputC & !(inputA ^ inputB) | !inputA & inputB;
+
+        switchLever(Lever.BACK, signBlock, result, 3);
+        switchLever(Lever.LEFT, signBlock, carry, 2);
+        switchLever(Lever.RIGHT, signBlock, carry, 2);
+    }
 }

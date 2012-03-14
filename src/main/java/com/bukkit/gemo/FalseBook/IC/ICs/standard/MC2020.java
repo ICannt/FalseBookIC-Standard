@@ -9,33 +9,30 @@ import java.util.Random;
 import org.bukkit.block.Sign;
 import org.bukkit.event.block.SignChangeEvent;
 
-public class MC2020 extends BaseIC
-{
-  Random rGen;
+public class MC2020 extends BaseIC {
 
-  public MC2020()
-  {
-    this.ICName = "3-BIT RANDOM";
-    this.ICNumber = "[MC2020]";
-    setICGroup(ICGroup.STANDARD);
-    this.chipState = new BaseChip(true, false, false, "Clock", "", "");
-    this.chipState.setOutputs("Random bit 1", "Random bit 2", "Random bit 3");
-    this.ICDescription = "The MC2020 generates 3 random bits whenever the input (the \"clock\") goes from low to high.";
-    this.rGen = new Random();
-  }
+    Random rGen;
 
-  public void checkCreation(SignChangeEvent event)
-  {
-    event.setLine(2, "");
-    event.setLine(3, "");
-  }
-
-  public void Execute(Sign signBlock, InputState currentInputs, InputState previousInputs)
-  {
-    if ((currentInputs.isInputOneHigh()) && (previousInputs.isInputOneLow())) {
-      switchLever(Lever.BACK, signBlock, this.rGen.nextBoolean());
-      switchLever(Lever.LEFT, signBlock, this.rGen.nextBoolean());
-      switchLever(Lever.RIGHT, signBlock, this.rGen.nextBoolean());
+    public MC2020() {
+        this.ICName = "3-BIT RANDOM";
+        this.ICNumber = "[MC2020]";
+        setICGroup(ICGroup.STANDARD);
+        this.chipState = new BaseChip(true, false, false, "Clock", "", "");
+        this.chipState.setOutputs("Random bit 1", "Random bit 2", "Random bit 3");
+        this.ICDescription = "The MC2020 generates 3 random bits whenever the input (the \"clock\") goes from low to high.";
+        this.rGen = new Random();
     }
-  }
+
+    public void checkCreation(SignChangeEvent event) {
+        event.setLine(2, "");
+        event.setLine(3, "");
+    }
+
+    public void Execute(Sign signBlock, InputState currentInputs, InputState previousInputs) {
+        if ((currentInputs.isInputOneHigh()) && (previousInputs.isInputOneLow())) {
+            switchLever(Lever.BACK, signBlock, this.rGen.nextBoolean());
+            switchLever(Lever.LEFT, signBlock, this.rGen.nextBoolean());
+            switchLever(Lever.RIGHT, signBlock, this.rGen.nextBoolean());
+        }
+    }
 }
