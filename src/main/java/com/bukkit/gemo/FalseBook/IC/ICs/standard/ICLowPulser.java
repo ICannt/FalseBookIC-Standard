@@ -29,7 +29,7 @@ public class ICLowPulser extends BaseIC {
 
     public void checkCreation(SignChangeEvent event) {
         try {
-            String[] lines = event.getLine(2).split(":");
+            String[] lines = event.getLine(1).split(":");
             if (lines.length == 1) {
                 int val = Integer.valueOf(lines[0]).intValue();
                 if (val < 0) {
@@ -38,7 +38,7 @@ public class ICLowPulser extends BaseIC {
                         val = 1;
                     }
                 }
-                event.setLine(2, ((Integer) val).toString());
+                event.setLine(1, ((Integer) val).toString());
             } else if (lines.length > 1) {
                 int val = Integer.valueOf(lines[0]).intValue();
                 if (val < 0) {
@@ -54,14 +54,14 @@ public class ICLowPulser extends BaseIC {
                         valDelay = 1;
                     }
                 }
-                event.setLine(2, val + ":" + valDelay);
+                event.setLine(1, val + ":" + valDelay);
             }
         } catch (Exception e) {
-            event.setLine(2, "5");
+            event.setLine(1, "5");
             return;
         }
-        if (event.getLine(3).length() > 1) {
-            String[] split = event.getLine(3).split(":");
+        if (event.getLine(2).length() > 1) {
+            String[] split = event.getLine(2).split(":");
             if (split.length < 2) {
                 try {
                     int val = Integer.valueOf(split[0]).intValue();
@@ -71,7 +71,7 @@ public class ICLowPulser extends BaseIC {
                             val = 1;
                         }
                     }
-                    event.setLine(3, ((Integer) val).toString());
+                    event.setLine(2, ((Integer) val).toString());
                 } catch (Exception e) {
                     SignUtils.cancelSignCreation(event, "Wrong syntax in Line 4. Use: Pulsecount[:Pauselength] (Integer only)");
                     return;
@@ -89,7 +89,7 @@ public class ICLowPulser extends BaseIC {
                     if (val2 < 0) {
                         val2 = -val2;
                     }
-                    event.setLine(3, val + ":" + val2);
+                    event.setLine(2, val + ":" + val2);
                 } catch (Exception e) {
                     SignUtils.cancelSignCreation(event, "Wrong syntax in Line 4. Use: Pulsecount[:Pauselength] (Integer only)");
                     return;
@@ -112,7 +112,7 @@ public class ICLowPulser extends BaseIC {
             int pauseLength = 5;
             int pulseDelay = 1;
             try {
-                String[] lines = signBlock.getLine(2).split(":");
+                String[] lines = signBlock.getLine(1).split(":");
                 pulseDelay = 1;
                 if (lines.length == 1) {
                     pulseLength = Integer.valueOf(lines[0]).intValue();
@@ -136,8 +136,8 @@ public class ICLowPulser extends BaseIC {
                     }
                 }
 
-                if (signBlock.getLine(3).length() > 0) {
-                    String[] split = signBlock.getLine(3).split(":");
+                if (signBlock.getLine(2).length() > 0) {
+                    String[] split = signBlock.getLine(2).split(":");
                     if (split.length < 2) {
                         pulseCount = Integer.valueOf(split[0]).intValue();
                         pauseLength = pulseLength;

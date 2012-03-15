@@ -32,37 +32,37 @@ public class ICCounter extends BaseIC {
         String mode = "";
         String locStr = event.getBlock().getLocation().toString();
 
-        if (!Parser.isInteger(event.getLine(2))) {
+        if (!Parser.isInteger(event.getLine(1))) {
             SignUtils.cancelSignCreation(event, "Enter the resetvalue in line 3.");
             return;
         }
-        event.setLine(2, String.valueOf(Math.abs(Integer.valueOf(event.getLine(2)).intValue())));
+        event.setLine(1, String.valueOf(Math.abs(Integer.valueOf(event.getLine(1)).intValue())));
 
-        if (event.getLine(3).length() > 0) {
-            if ((!event.getLine(3).equalsIgnoreCase("ONCE")) && (!event.getLine(3).equalsIgnoreCase("INF"))) {
+        if (event.getLine(2).length() > 0) {
+            if ((!event.getLine(2).equalsIgnoreCase("ONCE")) && (!event.getLine(2).equalsIgnoreCase("INF"))) {
                 SignUtils.cancelSignCreation(event, "Line 4 must be ONCE or INF. (default: INF)");
                 return;
             }
-            event.setLine(3, event.getLine(3).toUpperCase());
+            event.setLine(2, event.getLine(2).toUpperCase());
         } else {
-            event.setLine(3, "INF");
+            event.setLine(2, "INF");
         }
-        val = Integer.valueOf(event.getLine(2)).intValue();
-        mode = event.getLine(3);
+        val = Integer.valueOf(event.getLine(1)).intValue();
+        mode = event.getLine(2);
         this.ModeList.put(locStr, mode);
         this.CountList.put(locStr, Integer.valueOf(val));
         this.StartCountList.put(locStr, Integer.valueOf(val));
     }
 
     public void Execute(Sign signBlock, InputState currentInputs, InputState previousInputs) {
-        if (!Parser.isInteger(signBlock.getLine(2))) {
+        if (!Parser.isInteger(signBlock.getLine(1))) {
             return;
         }
-        int line2 = Math.abs(Parser.getInteger(signBlock.getLine(2), 1));
+        int line2 = Math.abs(Parser.getInteger(signBlock.getLine(1), 1));
 
         String locStr = signBlock.getBlock().getLocation().toString();
         if ((!this.ModeList.containsKey(locStr)) || (!this.CountList.containsKey(locStr)) || (!this.StartCountList.containsKey(locStr))) {
-            this.ModeList.put(locStr, signBlock.getLine(3));
+            this.ModeList.put(locStr, signBlock.getLine(2));
             this.CountList.put(locStr, Integer.valueOf(line2));
             this.StartCountList.put(locStr, Integer.valueOf(line2));
         }

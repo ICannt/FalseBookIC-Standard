@@ -31,11 +31,12 @@ public class ICLowDelayer extends BaseIC {
     }
 
     public void checkCreation(SignChangeEvent event) {
-        if (!Parser.isInteger(event.getLine(2))) {
+        if (!Parser.isInteger(event.getLine(1))) {
             SignUtils.cancelSignCreation(event, "Enter the delay in seconds in line 3.");
             return;
         }
-        event.setLine(2, String.valueOf(Math.abs(Integer.valueOf(event.getLine(2)).intValue())));
+        event.setLine(1, String.valueOf(Math.abs(Integer.valueOf(event.getLine(1)).intValue())));
+        event.setLine(2, "");
         event.setLine(3, "");
     }
 
@@ -52,10 +53,10 @@ public class ICLowDelayer extends BaseIC {
                 }
             }
 
-            if (!Parser.isInteger(signBlock.getLine(2))) {
+            if (!Parser.isInteger(signBlock.getLine(1))) {
                 return;
             }
-            int secs = Math.abs(Parser.getInteger(signBlock.getLine(2), 1));
+            int secs = Math.abs(Parser.getInteger(signBlock.getLine(1), 1));
             newSched = new SchedulerClass(this, signBlock.getBlock().getLocation());
             ((SchedulerClass) newSched).TaskID = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(FalseBookICCore.getInstance(), (Runnable) newSched, 20 * secs);
             this.TaskList.put(signBlock.getBlock().getLocation().toString(), (SchedulerClass) newSched);

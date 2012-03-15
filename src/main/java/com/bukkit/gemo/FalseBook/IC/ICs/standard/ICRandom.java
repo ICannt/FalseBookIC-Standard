@@ -25,13 +25,14 @@ public class ICRandom extends BaseIC {
     }
 
     public void checkCreation(SignChangeEvent event) {
-        event.setLine(2, "");
-        if (event.getLine(3).equalsIgnoreCase("force:high")) {
-            event.setLine(3, "FORCE:HIGH");
-        } else if (event.getLine(3).equalsIgnoreCase("force:low")) {
-            event.setLine(3, "FORCE:LOW");
+        event.setLine(1, "");
+        event.setLine(3, "");
+        if (event.getLine(2).equalsIgnoreCase("force:high")) {
+            event.setLine(2, "FORCE:HIGH");
+        } else if (event.getLine(2).equalsIgnoreCase("force:low")) {
+            event.setLine(2, "FORCE:LOW");
         } else {
-            event.setLine(3, "");
+            event.setLine(2, "");
         }
     }
 
@@ -40,9 +41,9 @@ public class ICRandom extends BaseIC {
             switchLever(Lever.BACK, signBlock, this.rGen.nextBoolean());
         }
 
-        if ((currentInputs.isInputOneLow()) && (previousInputs.isInputOneHigh()) && ((signBlock.getLine(3).equalsIgnoreCase("force:high")) || (signBlock.getLine(3).equalsIgnoreCase("force:low")))) {
+        if ((currentInputs.isInputOneLow()) && (previousInputs.isInputOneHigh()) && ((signBlock.getLine(2).equalsIgnoreCase("force:high")) || (signBlock.getLine(3).equalsIgnoreCase("force:low")))) {
             boolean resetState = false;
-            if (signBlock.getLine(3).equalsIgnoreCase("force:high")) {
+            if (signBlock.getLine(2).equalsIgnoreCase("force:high")) {
                 resetState = true;
             }
             switchLever(Lever.BACK, signBlock, resetState);
